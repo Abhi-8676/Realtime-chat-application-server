@@ -1,11 +1,18 @@
 import { createClient } from 'redis';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const redisClient = createClient({
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, '../../.env') });
+
+export const redisClient = createClient({
     username: 'default',
-    password: 'ssu5V75P2kljYHLglPHEY4FVXHi40w3F',
+    password: process.env.REDIS_PASSWORD,
     socket: {
-        host: 'redis-19393.crce182.ap-south-1-1.ec2.cloud.redislabs.com',
-        port: 19393
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT || 19393
     }
 });
 
